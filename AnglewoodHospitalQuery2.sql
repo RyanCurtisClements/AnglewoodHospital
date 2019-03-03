@@ -1,47 +1,74 @@
 USE db_Hospital;
 
-CREATE TABLE tbl_Doctors (
-	EmployeeID int identity(1000,1) NOT NULL PRIMARY KEY,
-	EmployeeName varchar(255) NOT NULL,
-	Title varchar(100),
-	Experience int,
+CREATE TABLE Patients
+(
+	[PatID] INT IDENTITY(1000,1) NOT NULL PRIMARY KEY,
+	[FirstName] VARCHAR(25) NOT NULL,
+	[LastName] VARCHAR(25) NOT NULL,
+	[Age] INT NOT NULL,
+	[Weight] INT NOT NULL,
+	[Sex] CHAR(1) NOT NULL,
+	[Address] VARCHAR(50) NOT NULL,
+	[PhoneNum] INT NOT NULL,
+	[DiagCode] INT NOT NULL,
+	[DocID] INT NOT NULL,
 );
 
-CREATE TABLE tbl_Nurses (
-	EmployeeID int identity(2000,1) NOT NULL PRIMARY KEY,
-	EmployeeName varchar(255) NOT NULL,
-	Title varchar(100),
-	Experience int,
+CREATE TABLE Doctors
+(
+	[DocID] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[FirstName] VARCHAR(25) NOT NULL,
+	[LastName] VARCHAR(25) NOT NULL,
+	[Dept] VARCHAR(15) NOT NULL
 );
 
-CREATE TABLE tbl_Departments (
-	DepartID int NOT NULL PRIMARY KEY,
-	DepartName varchar(255) NOT NULL,
-	DepartHead int NOT NULL FOREIGN KEY REFERENCES tbl_Doctors(ID)
+CREATE TABLE LabReports
+(
+	[ReportNum] VARCHAR(5) NOT NULL PRIMARY KEY,
+	[PatID] INT NOT NULL,
+	[Weight] INT NOT NULL,
+	[DocID] INT NOT NULL FOREIGN KEY REFERENCES Doctors(DocID),
+	[Date] DATETIME NOT NULL,
+	[PatType] VARCHAR(10) NOT NULL,
+	[Price] INT NOT NULL
 );
 
-CREATE TABLE tbl_Procedure (
-	ProcID int NOT NULL PRIMARY KEY,
-	ProcName varchar(255) NOT NULL,
-	ProcPrice money NOT NULL
+CREATE TABLE Inpatients
+(
+	[PatID] INT NOT NULL,
+	[RoomNum] VARCHAR(5) NOT NULL,
+	[AdmissionDate] DATETIME NOT NULL,
+	[ReleaseDate] DATETIME NOT NULL,
+	[Advance] INT NOT NULL,
+	[ReportNum] VARCHAR(5) FOREIGN KEY REFERENCES LabReports(ReportNum)
 );
 
-CREATE TABLE tbl_Patient (
-	ID int NOT NULL PRIMARY KEY,
-	FirstName varchar(70) NOT NULL,
-	LastName varchar(70) NOT NULL,
-	Address varchar(255) NOT NULL,
-	Phone varchar(255) NOT NULL,
-	PCP int NOT NULL FOREIGN KEY REFERENCES tbl_Physician(ID)
+CREATE TABLE Outpatients
+(
+	[PatID] INT NOT NULL,
+	[Date] DATETIME NOT NULL,
+	[ReportNum] VARCHAR(5) FOREIGN KEY REFERENCES LabReports(ReportNum)
 );
 
-CREATE TABLE tbl_Room (
-	Number int NOT NULL PRIMARY KEY,
-	AttendingPhysicianID int FOREIGN KEY REFERENCES tbl_Physician(ID),
-	DepartmentID int NOT NULL FOREIGN KEY REFERENCES tbl_Department(ID),
-	RoomType varchar(255) NOT NULL,
-	Status varchar(25) NOT NULL
-	);
+CREATE TABLE Rooms
+(
+	[RoomNum] INT IDENTITY(200,1) NOT NULL PRIMARY KEY,
+	[RoomType] VARCHAR(20) NOT NULL,
+	[Status] VARCHAR(10) NOT NULL
+);
 
-CREATE TABLE tbl_Treatment (
-	TreatmentCode int NOT NULL PRIMARY KEY,
+CREATE TABLE Bills
+(
+	[BillNum] INT IDENTITY(5000,5) NOT NULL PRIMARY KEY,
+	[PatID] INT FOREIGN KEY REFERENCES Patients(PatID),
+	[PatType] VARCHAR(10),
+	[DocCharge] INT NOT NULL,
+	[MedCharge] INT NOT NULL,
+	[RoomCharge] INT NOT NULL,
+	[LabCharge] INT,
+	[OprtnCharge] INT,
+	[DaysStayed] INT,
+	[Advance] INT,
+	[HealthPlan] VARCHAR(50),
+	[BillTotal] INT NOT NULL
+);
