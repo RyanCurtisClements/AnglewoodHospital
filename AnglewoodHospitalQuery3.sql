@@ -1,6 +1,6 @@
 USE db_Hospital;
 
-INSERT INTO Patients ([FirstName], [LastName], [Age], [Weight], [Sex], [Address], [PhoneNum], [DiagCode], [DocID])
+INSERT INTO Patients ([FirstName], [LastName], [Age], [Weight], [Sex], [Address], [PhoneNum])
 VALUES ('Jaime', 'Young', 23, 174, 'X', '6 Forest St. 
 Fresno, CA 93706', 202-555-0169),
 ('Jill', 'Newman', 53, 145, 'F', '4 Williams Drive 
