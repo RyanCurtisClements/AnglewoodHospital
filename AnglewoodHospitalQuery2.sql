@@ -10,8 +10,6 @@ CREATE TABLE Patients
 	[Sex] CHAR(1) NOT NULL,
 	[Address] VARCHAR(50) NOT NULL,
 	[PhoneNum] INT NOT NULL,
-	[DiagCode] INT NOT NULL,
-	[DocID] INT NOT NULL,
 );
 
 CREATE TABLE Doctors
@@ -22,6 +20,18 @@ CREATE TABLE Doctors
 	[Dept] VARCHAR(15) NOT NULL
 );
 
+CREATE TABLE Diagnoses
+(
+	[DiagCode] CHAR(3) NOT NULL PRIMARY KEY,
+	[DiagName] VARCHAR(100) NOT NULL,
+	[DiagDept] VARCHAR(15) NOT NULL,
+	[DocCharge] INT,
+	[MedCharge] INT,
+	[LabCharge] INT,
+	[OprtnCharge] INT,
+	[RestDaysNeeded] INT
+);
+
 CREATE TABLE LabReports
 (
 	[ReportNum] VARCHAR(5) NOT NULL PRIMARY KEY,
@@ -29,8 +39,9 @@ CREATE TABLE LabReports
 	[Weight] INT NOT NULL,
 	[DocID] INT NOT NULL FOREIGN KEY REFERENCES Doctors(DocID),
 	[Date] DATETIME NOT NULL,
+	[DiagCode] CHAR(3) NOT NULL FOREIGN KEY REFERENCES Diagnoses(DiagCode),
 	[PatType] VARCHAR(10) NOT NULL,
-	[Price] INT NOT NULL
+	[Advance] INT NOT NULL
 );
 
 CREATE TABLE Inpatients
@@ -54,6 +65,7 @@ CREATE TABLE Rooms
 (
 	[RoomNum] INT IDENTITY(200,1) NOT NULL PRIMARY KEY,
 	[RoomType] VARCHAR(20) NOT NULL,
+	[RoomDept] VARCHAR(15) NOT NULL,
 	[Status] VARCHAR(10) NOT NULL
 );
 
