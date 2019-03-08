@@ -43,8 +43,11 @@ VALUES ('Edward', 'Sanderson', 'Burn Center'),
 ('Xander', 'Greer','Psychiatric');
 
 INSERT INTO Diagnoses ([DiagCode], [DiagName], [DiagDept], [DocCharge], [MedCharge], [LabCharge], [OprtnCharge], [RestDaysNeeded])
-VALUES('A16', 'Tuberculosis', 'Pharmacy', 500, 200, 50, '', '',),
+VALUES('A16', 'Tuberculosis', 'Pharmacy', 500, 200, 50, '', ''),
 ('S42', 'Fracture of shoulder and upper arm', 'Surgery', 500, 100, 50, 3000, 3),
 ('T23', 'Burn and corrosion of wrist and hand', 'Burn Center', 500, 100, 50, 1000, ''),
 ('J00', 'Acute nasopharyngitis', 'Pediatric Care', 300, 20, 50, '', '');
 
+INSERT INTO LabReports ([ReportNum], [PatID], [Weight], [DocID], [Date], [DiagCode], [PatType], [Advance])
+VALUES('00001', 1000, 169, 9, '2019-03-07 2:00:00', 'S42', 'Inpatient', 100),
+('00002', 1005, 170, 1, '2019-3-07 4:00:00', 'T23', 'Outpatient', 50);
